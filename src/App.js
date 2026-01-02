@@ -1,21 +1,302 @@
-function App(props)
-{
-  var a=props.data.Rollno
-  var b=props.data.StudentName
-  var c=props.data.Mark
-  var d=props.data.Rank
-  var e=props.data.Hobbies
-  
-  return(<>
-    <h3>Type of Rollno:{typeof(a)}</h3>
-    <h3>Type of Sname:{typeof(b)}</h3>
-    <h3>Type of mark:{typeof(c)}</h3>
-    <h3>Type of Rank:{typeof(d)}</h3>
-    <h3>{Array.isArray(c)?"It is a array":"It is a object json"}</h3>
-    <h3>{Array.isArray(e)?"It is a array":"It is a object json"}</h3>
-  </>)
+import React, { useState } from 'react'
+
+const App = () => {
+  const [city,setCity]=useState("karur")
+  const [list,setList]=useState("null")
+  const upcity=(event)=>{
+    setCity(event.target.value);
+  }
+  const findweather=()=>{
+    // console.log("city name : ",city)
+    var api=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=ef2da7b29993fa741ae02cbe12867814`;
+    fetch(api)
+            .then((response)=>response.json())
+            .then((data)=>{console.log(data);
+              console.log(data);
+              setList(data)
+                // document.getElementById("res1").innerHTML=`<br><b>Main Weather Report : </b>${data.weather[0].main}`;
+                // document.getElementById("res2").innerHTML=`<br><b>Detialed Weather Report : </b>${data.weather[0].description}`
+                // document.getElementById("res3").innerHTML=`<br><b>Wind Speed : </b>${data.wind.speed}`
+                // document.getElementById("res4").innerHTML=`<br><b>Temperature : </b>${data.main.temp}`
+                // document.getElementById("res5").innerHTML=`<br><b>Humidity : </b>${data.main.humidity}`
+                })
+                
+                .catch((err)=>{
+                console.log(""+err);
+                setList(err)
+                // document.getElementById("sid").style.display="none";
+                // document.getElementById("error").innerHTML="<h2>❌City Not Found</h2>"
+                })
+
+    // alert("City Name : "+city)
+    // document.getElementById("res")=("City Name : "+city)
+  }
+  return (
+    <div>
+      <h2><center>Fetch - API</center></h2>
+      <h2>Weather Report</h2>
+      <label>Enter City Name</label>
+      <input type='text' value={city} onChange={upcity}></input><br></br>
+      <input type='button' onClick={findweather} value="GetReport"></input><br></br>
+      {list.cod===200 &&
+      <>
+      <h2>Final Report</h2>
+      <h3>Main Report : {list !==null && list.weather[0].main}</h3>
+      <h3>Description : {list !==null && list.weather[0].description}</h3>
+      <h3>Wind Speed : {list !==null && list.wind.speed}</h3>
+      <h3>Temperature : {list !==null && list.main.temp}</h3>
+      <h3>Humidity : {list !==null && list.main.humidity}</h3>
+</>}
+    {list.cod==='404' &&
+      <h3>Error Message : {list!==null && list.cod==='404' && list.message}</h3>
+      }
+    </div>
+  )
 }
+
 export default App
+
+
+// import React from 'react';
+// import key from "./images/Key.png";
+// import "./App.css";
+
+// const App = () => {
+//   return (
+//     <div className='div1'>
+//       <div className='div2'>
+//         <div className='div3'>
+//             <div className='div4'>
+//               <img src={key} width={"50px"} height={"50px"} className='img'></img><br></br>
+//               <h3>ADMIN PANEL</h3>
+
+//               <div className='inpt'>
+//               <input className='inputbox' type='text' placeholder='Username' id='user' required></input>
+//               {/* <label >Username</label> */}
+//               <br/><br/>
+//               </div>
+//               <div className='inpt'>
+//               <input className='inputbox' type='password' placeholder='Password' id='password' required></input>
+//               {/* <label >Password</label> */}
+//               <br/><br/>
+//               </div>
+
+//               <div className='div5'>
+//               <button className='btn' onClick={()=>{alert("Login successful")}}>Login</button>
+//               </div>
+//             </div>
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default App
+
+
+// import { useState,useEffect } from "react"
+// const App=()=>{
+//   const [name,setName]=useState("")
+//   useEffect(()=>{
+//     document.title=`Title ${name}`
+//   },[name])
+//   const dis=(event)=>{
+//     setName(event.target.value)
+//   }
+//   return(
+//     <div>
+//       <h1>{name}</h1>
+//       <input type="text" onChange={dis}></input>
+//     </div>
+//   )
+// }
+// export default App
+
+// import { useEffect,useState } from "react";
+// const App=()=>{
+//   const [name,setName]=useState("")
+//   useEffect(()=>{
+//     document.title=`Abitha ${name}`
+//   },[name])
+//   const dis=(event)=>{
+//     setName(event.target.value)
+//   }
+//   return(
+//     <div>
+//       <h1>{name}</h1>
+//       <input type="text" onChange={dis}></input>
+//       {/* <button onClick={btn}>Click</button> */}
+//     </div>
+//   )
+// }
+// export default App
+
+// import react from "react";
+// import { useState } from "react";
+// const App=()=>{
+// const [count,setCount]=useState(0)
+// const num=()=>{
+//   setCount(count+1)
+// }
+// return(<>
+//   <div>
+//     <button onClick={num}>Clicked : {count}</button>
+//   </div>
+// </>)
+// }
+// export default App
+
+// import React from "react";
+// import { useState } from "react";
+// function App(){
+//   const [count,setCount]=useState(0)
+//   return(<>
+//     <div><button onClick={()=>setCount(count+1)}>Clicked button {count}</button></div>
+//   </>)
+// }
+// export default App
+
+// import { useState } from "react";
+// function App()
+// {
+//   const [num,setNum]=useState(100)
+//   const show=(event)=>{
+//     if(event.target.id==="b1")
+//       setNum(num+1)
+//     if(event.target.id==="b2")
+//       setNum(num-1)
+//   }
+//   return(
+//     <div style={{
+//       marginTop:"20px",
+//       marginLeft:"50px",
+//       height:"130px",
+//       width:"200px",
+//       textAlign:"center",
+//       border:"solid black 2px",
+//       borderRadius:"20px"
+//     }}>
+//       <h1>{num}</h1>
+//       <button id="b1" onClick={show}>Increase</button>
+//       <span> </span>
+//       <button id="b2" onClick={show}>Decrease</button>
+//       {/* <button onClick={()=>setNum(num+1)}><b><i>Increase</i></b></button>
+//       <span> </span>
+//       <button onClick={()=>setNum(num-1)}><b><i>Decrease</i></b></button> */}
+//     </div>
+//   )
+// }
+// export default App
+
+// import { useState } from 'react'
+// import React from 'react'
+
+// const App = () => {
+//   const [name,setName]=useState("---")
+// const dis=(even)=>{
+//   setName(even.target.value)
+//   }
+//   const show=(v)=>{
+//     console.log(v)
+//   }
+//   return (
+//     <div>
+//       <form>
+//       <table></table>
+//       <h1>User Name & Password</h1>
+//       <label><b>Name : </b></label>
+//       <input type='text' placeholder='Enter User Name' value={name} onChange={dis}></input><br/>
+//       <label><b>Password : </b></label>
+//       <input type='password' placeholder='Enter Password'></input><br/>
+//       <label><b>Mobile Num : </b></label>
+//       <input type='number' placeholder='Enter Number'></input><br/>
+//       <label><b>E-Mail : </b></label>
+//       <input type='email' placeholder='Enter E-mail'></input><br/>
+//       <label><b>Select Gender : </b></label><br></br>
+//       <input type='radio' name={'gen'}></input>Male<br/>
+//       <input type='radio' name={'gen'}></input>Female<br/>
+//       <label><b>Select Course : </b></label><br></br>
+//       <input type='checkbox' name='course'></input>HTML<br/>
+//       <input type='checkbox' name='course'></input>CSS<br/>
+//       <input type='checkbox' name='course'></input>JavaScript<br/>
+//       <input type='checkbox' name='course'></input>React <br/>
+//       <label><b>Select Your Birth Month : </b></label><br/>
+//       <select>
+//         <option selected disabled>Select Month</option>
+//         <option>January</option>
+//         <option>February</option>
+//         <option>March</option>
+//         <option>April</option>
+//         <option>May</option>
+//         <option>June</option>
+//         <option>July</option>
+//         <option>August</option>
+//         <option>September</option>
+//         <option>October</option>
+//         <option>November</option>
+//         <option>December</option>
+//       </select><br/>
+//       <label><b>Select Your Date of Birth</b></label><br/>
+//       <input type='date'></input><br/>
+//       <label><b>Your Birth Time : </b></label><br/>
+//       <input type='time'></input><br/>
+//       <label><b>Upload Resume : </b></label>
+//       <input type='file'></input><br></br>
+//       <button><b><s>clickme</s></b></button>
+//       <br></br>
+//       <label><b>Type your address :</b></label>
+//       <textarea rows="7" cols="25"></textarea>
+//       <br></br>
+//       <label><b>List box</b></label>
+//       <select size="6" multiple>
+//       <option>sunday</option>
+//       <option>monday</option>
+//       <option>tuesday</option>
+//       <option>wednesday</option>
+//       <option>thursday</option>
+//       <option>friday</option>
+//       <option>saturday</option>
+//       </select>
+//       <br></br>
+//       <label><b>Progress bar 90% completed :</b></label>
+//       <progress style={{backgroundColor:'green',border:"2px solid orange"}} min="0" max="100" value="90"></progress>
+//       <br></br>
+//       😁📍😎😒😍❤️🤣
+//       <label>volume : </label>
+//       <input type="range" min="0" max="6"></input>
+//       <input type="submit"></input>
+//       <input type="button" value="clickme"></input>
+//       <br></br>
+
+//       <input type='Submit' ></input><br/>
+//       <input type='button' value={'Click'}></input>
+//       </form>
+//     </div>
+    
+//   )
+// }
+
+// export default App
+
+
+// function App(props)
+// {
+//   var a=props.data.Rollno
+//   var b=props.data.StudentName
+//   var c=props.data.Mark
+//   var d=props.data.Rank
+//   var e=props.data.Hobbies
+  
+//   return(<>
+//     <h3>Type of Rollno:{typeof(a)}</h3>
+//     <h3>Type of Sname:{typeof(b)}</h3>
+//     <h3>Type of mark:{typeof(c)}</h3>
+//     <h3>Type of Rank:{typeof(d)}</h3>
+//     <h3>{Array.isArray(c)?"It is a array":"It is a object json"}</h3>
+//     <h3>{Array.isArray(e)?"It is a array":"It is a object json"}</h3>
+//   </>)
+// }
+// export default App
 
 // import parse from "html-react-parser"
 // function App(props) {
